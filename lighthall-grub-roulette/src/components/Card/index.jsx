@@ -7,8 +7,7 @@ const Card = (props) => {
   const [rejectedCards, setRejectedCards] = useState([]);
   const accpetFunction = (data) => {
     // setAcceptedCards([cardData.filter((e) => e.id !== data), ...acceptedCards]);
-    setAcceptedCards([...acceptedCards, cardData.find((e) => e.id === data)]);
-    console.log(acceptedCards);
+    setAcceptedCards([cardData.find((e) => e.id === data), ...acceptedCards]);
     setCardData(cardData.filter((e) => e.id !== data));
   };
   // console.log(cardData);
