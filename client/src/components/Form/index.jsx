@@ -20,7 +20,7 @@ const FormComponent = (props) => {
     const { location, price, cuisine } = dataObject;
     const url = setYelpUrl(location, price, cuisine);
     console.log(url);
-    
+
     try {
       const { data } = await axios.get(url);
       console.log(data);
@@ -54,6 +54,7 @@ const FormComponent = (props) => {
                 type="text"
                 placeholder="Enter Location"
                 name="location"
+                autoComplete="off"
                 value={location}
                 onChange={(e) =>
                   setData({
