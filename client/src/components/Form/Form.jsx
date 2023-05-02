@@ -11,6 +11,7 @@ import { setYelpUrl } from "../../Services/api.service";
 import axios from "axios";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+
 const FormComponent = (props) => {
   const { data, setData } = props;
   const { location, price, cuisine } = data;

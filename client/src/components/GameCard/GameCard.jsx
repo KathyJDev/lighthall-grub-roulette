@@ -1,11 +1,13 @@
 import { useState } from "react";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
-const Card = (props) => {
+const GameCard = (props) => {
   // console.log(props);
   const { cardData, setCardData } = props;
   const [acceptedCards, setAcceptedCards] = useState([]);
   const [rejectedCards, setRejectedCards] = useState([]);
-  const accpetFunction = (data) => {
+  const acceptFunction = (data) => {
     // setAcceptedCards([cardData.filter((e) => e.id !== data), ...acceptedCards]);
     setAcceptedCards([...acceptedCards, cardData.find((e) => e.id === data)]);
     console.log(acceptedCards);
@@ -14,24 +16,50 @@ const Card = (props) => {
   // console.log(cardData);
   return (
     <div>
-      {cardData.map((e) => {
-        return (
-          <div key={e.id}>
-            {e.name}
-            <button onClick={() => accpetFunction(e.id)}>Accept</button>
-            <button>Reject</button>
-          </div>
-        );
-      })}
-      <h3>Accepted Cards</h3>
-      {acceptedCards.map((a, index) => (
-        <div key={index}>{a.name}</div>
-      ))}
+      <div className="card-container">
+        <h1>Select Restaurants</h1>
+        {cardData.map((e) => {
+          return (
+            <Card style={{ width: '16rem' }}>
+              <Card.Img variant="top" src={e.image_url} />
+              <Card.Body>
+                <Card.Title>{e.name}</Card.Title>
+                <Card.Text>
+                  <p>{e.location.display_address[0]}</p>
+                  <p>Rating: {e.rating}</p>
+                </Card.Text>
+                <Button onClick={() => acceptFunction(e.id)} variant="success">Accept</Button>
+                {' '}
+                <Button variant="danger">Reject</Button>
+              </Card.Body>
+            </Card>
+          );
+        })}
+        <div>
+        </div>
+      </div>
+
+      <div className="card-container">
+        <h1>Selected Restaurants</h1>
+        {acceptedCards.map((a, index) => (
+          <Card key={index} style={{ width: '14rem', height: "20rem" }}>
+            <Card.Img variant="top" src={a.image_url} />
+            <Card.Body>
+              <Card.Title>{a.name}</Card.Title>
+              <Card.Text>
+                <p>{a.location.display_address[0]}</p>
+                <p>Rating: {a.rating}</p>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
+
     </div>
   );
 };
 
-export default Card;
+export default GameCard;
 
 // "id": "4-_AV-TK2u4dL5Y9ePhRrA",
 //             "alias": "troyka-restaurant-forest-hills",

@@ -1,5 +1,5 @@
 // import { Link } from "react-router-dom";
-import FormComponent from "../../components/Form";
+import FormComponent from "../../components/Form/Form";
 import { useState } from "react";
 
 const HomePage = () => {

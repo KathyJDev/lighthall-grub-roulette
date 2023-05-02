@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { setYelpUrl } from "../../Services/api.service";
 import { toast } from "react-toastify";
-import Card from "../../components/Card";
+import GameCard from "../../components/GameCard/GameCard";
 
 const GamePage = () => {
   const [fetchData, setFetchData] = useState([]);
@@ -28,7 +28,7 @@ const GamePage = () => {
 
   return (
     <div className="game-container">
-      <Card cardData={fetchData} setCardData={setFetchData} />
+      <GameCard cardData={fetchData} setCardData={setFetchData} />
     </div>
   );
 };
