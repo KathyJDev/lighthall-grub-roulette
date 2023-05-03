@@ -3,13 +3,16 @@ import { useState, useEffect } from "react";
 import { setYelpUrl } from "../../Services/api.service";
 import { toast } from "react-toastify";
 import GameCard from "../../components/GameCard/GameCard";
+import Button from "react-bootstrap/Button";
 
 const GamePage = () => {
   const [fetchData, setFetchData] = useState([]);
+  const [uniqueId, setUniqueId] = useState("");
   const queryParameters = new URLSearchParams(window.location.search);
   const locationData = queryParameters.get("location");
   const cuisineData = queryParameters.get("cuisine");
   const priceData = queryParameters.get("price");
+
 
   const searchUrl = async (locationData, priceData, cuisineData) => {
     const url = setYelpUrl(locationData, priceData, cuisineData);
@@ -26,8 +29,21 @@ const GamePage = () => {
     searchUrl(locationData, priceData, cuisineData);
   }, []);
 
+  function copyLink() {
+    setUniqueId("xyz"); //test
+    toast.info("Copied!");
+    navigator.clipboard.writeText(`${window.location.origin + "/modal/"}${uniqueId + "?location=" + locationData + "&price=" + priceData}`);
+  }
+
   return (
     <div className="game-container">
+      <div className="game-header">
+        <h1>Select Restaurants</h1>
+        <Button onClick={copyLink}>Share With Friend</Button>
+      </div>
+
+
+
       <GameCard cardData={fetchData} setCardData={setFetchData} />
     </div>
   );

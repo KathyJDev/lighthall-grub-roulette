@@ -17,7 +17,6 @@ const GameCard = (props) => {
   return (
     <div>
       <div className="card-container">
-        <h1>Select Restaurants</h1>
         {cardData.map((e) => {
           return (
             <Card style={{ width: '16rem' }}>
@@ -25,8 +24,9 @@ const GameCard = (props) => {
               <Card.Body>
                 <Card.Title>{e.name}</Card.Title>
                 <Card.Text>
-                  <p>{e.location.display_address[0]}</p>
-                  <p>Rating: {e.rating}</p>
+                  <h6>{e.location.display_address[0]}</h6>
+                  <h6>Rating: {e.rating}</h6>
+
                 </Card.Text>
                 <Button onClick={() => acceptFunction(e.id)} variant="success">Accept</Button>
                 {' '}
@@ -47,8 +47,8 @@ const GameCard = (props) => {
             <Card.Body>
               <Card.Title>{a.name}</Card.Title>
               <Card.Text>
-                <p>{a.location.display_address[0]}</p>
-                <p>Rating: {a.rating}</p>
+                <h6>{a.location.display_address[0]}</h6>
+                <h6>Rating: {a.rating}</h6>
               </Card.Text>
             </Card.Body>
           </Card>
