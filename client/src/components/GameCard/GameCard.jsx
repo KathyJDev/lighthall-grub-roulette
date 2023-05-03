@@ -8,29 +8,32 @@ const GameCard = (props) => {
   const [acceptedCards, setAcceptedCards] = useState([]);
   const [rejectedCards, setRejectedCards] = useState([]);
   const acceptFunction = (data) => {
-    // setAcceptedCards([cardData.filter((e) => e.id !== data), ...acceptedCards]);
     setAcceptedCards([...acceptedCards, cardData.find((e) => e.id === data)]);
-    console.log(acceptedCards);
     setCardData(cardData.filter((e) => e.id !== data));
   };
-  // console.log(cardData);
+  const rejectFunction = (data) => {
+    setRejectedCards([...rejectedCards, cardData.find((e) => e.id === data)]);
+    setCardData(cardData.filter((e) => e.id !== data));
+  };
+
+
+
   return (
     <div>
       <div className="card-container">
         {cardData.map((e) => {
           return (
-            <Card style={{ width: '16rem' }}>
+            <Card key={e.id} style={{ width: '16rem' }}>
               <Card.Img variant="top" src={e.image_url} />
               <Card.Body>
                 <Card.Title>{e.name}</Card.Title>
-                <Card.Text>
-                  <h6>{e.location.display_address[0]}</h6>
-                  <h6>Rating: {e.rating}</h6>
+                <Card.Text>{e.location.display_address[0]}</Card.Text>
+                <Card.Text>Rating: {e.rating}</Card.Text>
 
-                </Card.Text>
+
                 <Button onClick={() => acceptFunction(e.id)} variant="success">Accept</Button>
                 {' '}
-                <Button variant="danger">Reject</Button>
+                <Button onClick={() => rejectFunction(e.id)} variant="danger">Reject</Button>
               </Card.Body>
             </Card>
           );
@@ -46,10 +49,9 @@ const GameCard = (props) => {
             <Card.Img variant="top" src={a.image_url} />
             <Card.Body>
               <Card.Title>{a.name}</Card.Title>
-              <Card.Text>
-                <h6>{a.location.display_address[0]}</h6>
-                <h6>Rating: {a.rating}</h6>
-              </Card.Text>
+              <Card.Text>{a.location.display_address[0]}</Card.Text>
+              <Card.Text>Rating: {a.rating}</Card.Text>
+
             </Card.Body>
           </Card>
         ))}

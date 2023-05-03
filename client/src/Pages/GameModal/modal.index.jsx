@@ -6,21 +6,30 @@ import Col from 'react-bootstrap/Col';
 import Select from "react-select";
 import Form from "react-bootstrap/Form";
 import { cuisineOptions } from "../../Utils/select-options";
+import { useNavigate, useParams, createSearchParams } from 'react-router-dom';
 
 const GameModal = () => {
 
+  const navigate = useNavigate();
   const [show, setShow] = useState(true);
 
-  const handleClick = () => setShow(false);
+  const { id } = useParams();
+  const queryParameters = new URLSearchParams(window.location.search);
+  const location = queryParameters.get("location");
+  const price = queryParameters.get("price");
+  const [userCuisine, setUserCuisine] = useState("");
 
-  // navigate({
-  //   pathname: "game",
-  //   search: createSearchParams({
-  //     location,
-  //     price,
-  //     cuisine,
-  //   }).toString(),
-  // });
+  const handleClick = () => {
+    navigate({
+      pathname: "/game/" + id,
+      replace: true,
+      search: createSearchParams({
+        location,
+        price,
+        cuisine: userCuisine,
+      }).toString(),
+    });
+  };
 
   return (
     <Modal show={show}>
@@ -35,10 +44,7 @@ const GameModal = () => {
             options={cuisineOptions}
             defaultValue={cuisineOptions[0]}
             onChange={(e) => {
-              setData({
-                ...data,
-                cuisine: e.value,
-              });
+              setUserCuisine(e.value);
             }}
             theme={(theme) => ({
               ...theme,
