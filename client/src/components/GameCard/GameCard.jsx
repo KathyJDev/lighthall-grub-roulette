@@ -1,8 +1,10 @@
-import { useState } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import TinderCard from 'react-tinder-card';
+
 
 
 const GameCard = (props) => {
@@ -31,56 +33,60 @@ const GameCard = (props) => {
     navigator.clipboard.writeText(`${window.location.origin + "/modal/"}${uniqueId + "?location=" + locationData + "&price=" + priceData}`);
   }
 
+  // tinder card swipe functions
+  const characters = cardData
+  const [lastDirection, setLastDirection] = useState()
+
+  const swiped = (direction, nameToDelete) => {
+    console.log('removing: ' + nameToDelete)
+    setLastDirection(direction)
+  }
+
+  const outOfFrame = (name) => {
+    console.log(name + ' left the screen!')
+  }
+  // 
+
 
 
   return (
-    <div>
-      {id && (cardData.length === 0) ?
+    <div className="game-card">
+      {/* {id && (cardData.length === 0) ?
         <div className="game-header">
           <Link to="/final"><Button size="lg" variant="success">Continue</Button></Link>
         </div>
         : (cardData.length === 0) ?
           <div className="game-header">
             <Button size="lg" variant="info" onClick={copyLink}>Share Secret Link With Friend</Button>
-          </div> : ""}
+          </div> : ""} */}
 
-      {cardData.length > 0 ? <div className="card-container">
-        <h1>Select Resttaurants</h1>
-        {cardData.map((e) => {
+      <div className="card-container">
+        {characters.map((e) => {
           return (
-            <Card key={e.id} style={{ width: '16rem' }}>
-              <Card.Img variant="top" src={e.image_url} />
-              <Card.Body>
-                <Card.Title>{e.name}</Card.Title>
-                <Card.Text>{e.location.display_address[0]}</Card.Text>
-                <Card.Text>Rating: {e.rating}</Card.Text>
+            <div className="swipe">
+              {/* <TinderCard
+              className='swipe'
+              key={e.name}
+              onSwipe={(dir) => swiped(dir, e.name)}
+              onCardLeftScreen={() => outOfFrame(e.name)}
+            > */}
+              <div className='card'>
+                <h3>{e.name}</h3>
+                <h6>{e.location.address1}</h6>
+                <img src={e.image_url} />
+                <p>{e.rating}</p>
 
+              </div>
+              <div className="buttons">
+                <Button className="pressable" onClick={() => acceptFunction(e.id)} variant="success">Accept</Button>
+                <Button className="pressable" onClick={() => rejectFunction(e.id)} variant="danger">Reject</Button> </div>
 
-                <Button onClick={() => acceptFunction(e.id)} variant="success">Accept</Button>
-                {' '}
-                <Button onClick={() => rejectFunction(e.id)} variant="danger">Reject</Button>
-              </Card.Body>
-            </Card>
+              {/* </TinderCard> */}
+            </div>
           );
         })}
         <div>
         </div>
-      </div> : ""}
-
-      <div className="card-container">
-        {acceptedCards.length > 0 ? <h1>Selected Restaurants</h1> : ""}
-
-        {acceptedCards.map((a, index) => (
-          <Card key={index} style={{ width: '16rem' }}>
-            <Card.Img variant="top" src={a.image_url} />
-            <Card.Body>
-              <Card.Title>{a.name}</Card.Title>
-              <Card.Text>{a.location.display_address[0]}</Card.Text>
-              <Card.Text>Rating: {a.rating}</Card.Text>
-
-            </Card.Body>
-          </Card>
-        ))}
       </div>
 
     </div>
