@@ -4,9 +4,6 @@ import Form from "react-bootstrap/Form";
 import Select from "react-select";
 import { cuisineOptions } from "../../Utils/select-options";
 import { priceOptions } from "../../Utils/select-options";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { setYelpUrl } from "../../Services/api.service";
 import axios from "axios";
 import { useNavigate, createSearchParams } from "react-router-dom";
@@ -40,89 +37,84 @@ const FormComponent = (props) => {
   };
 
   return (
-    <Container>
-      <Row className="justify-content-md-center">
-        <Col xs={10}>
-          <Form
-            onSubmit={(e) => {
-              e.preventDefault();
-              getYelpData(data);
-            }}
-          >
-            <Form.Group className="mb-3" controlId="formlocation">
-              <Form.Label>Location</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Location"
-                name="location"
-                autoComplete="off"
-                value={location}
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    location: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-            <Row>
-              <Col sm={6}>
-                <Form.Group className="mb-3" controlId="formprice">
-                  <Form.Label>Price</Form.Label>
-                  <Select
-                    options={priceOptions}
-                    defaultValue={priceOptions[0]}
-                    name="price"
-                    onChange={(e) =>
-                      setData({
-                        ...data,
-                        price: e.value,
-                      })
-                    }
-                    theme={(theme) => ({
-                      ...theme,
-                      borderRadius: 0,
-                      colors: {
-                        ...theme.colors,
-                        primary25: "hotpink",
-                        primary: "black",
-                      },
-                    })}
-                  />
-                </Form.Group>
-              </Col>
-              <Col sm={6}>
-                <Form.Group className="mb-3" controlId="formcuisine">
-                  <Form.Label>Cuisine</Form.Label>
-                  <Select
-                    options={cuisineOptions}
-                    defaultValue={cuisineOptions[0]}
-                    onChange={(e) => {
-                      setData({
-                        ...data,
-                        cuisine: e.value,
-                      });
-                    }}
-                    theme={(theme) => ({
-                      ...theme,
-                      borderRadius: 0,
-                      colors: {
-                        ...theme.colors,
-                        primary25: "hotpink",
-                        primary: "black",
-                      },
-                    })}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+
+    <Form className="home-form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        getYelpData(data);
+      }}
+    >
+      <Form.Group className="mb-3 form-grp" controlId="formlocation">
+        <Form.Label>Location: </Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter your location"
+          name="location"
+          autoComplete="off"
+          value={location}
+          onChange={(e) =>
+            setData({
+              ...data,
+              location: e.target.value,
+            })
+          }
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3 form-grp" controlId="formprice">
+        <Form.Label>Price: </Form.Label>
+        <Select
+
+          className="select"
+          options={priceOptions}
+          // defaultValue={priceOptions[0]}
+          name="price"
+          onChange={(e) =>
+            setData({
+              ...data,
+              price: e.value,
+            })
+          }
+          theme={(theme) => ({
+            ...theme,
+            colors: {
+              ...theme.colors,
+              primary25: "hotpink",
+              primary: "black",
+            },
+          })}
+        />
+      </Form.Group>
+
+      {/* <Form.Group className="mb-3 form-grp" controlId="formcuisine">
+        <Form.Label>Cuisine: </Form.Label>
+        <Select
+          className="select"
+          options={cuisineOptions}
+          defaultValue={cuisineOptions[0]}
+          onChange={(e) => {
+            setData({
+              ...data,
+              cuisine: e.value,
+            });
+          }}
+          theme={(theme) => ({
+            ...theme,
+            borderRadius: 0,
+            colors: {
+              ...theme.colors,
+              primary25: "hotpink",
+              primary: "black",
+            },
+          })}
+        />
+      </Form.Group> */}
+
+      <Button className="start-btn" type="submit">
+        Start
+      </Button>
+    </Form>
+
   );
 };
 
