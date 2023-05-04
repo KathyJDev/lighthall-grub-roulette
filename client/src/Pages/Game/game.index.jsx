@@ -13,6 +13,7 @@ const GamePage = () => {
   const locationData = queryParameters.get("location");
   const cuisineData = queryParameters.get("cuisine");
   const priceData = queryParameters.get("price");
+  const selectedPlayer = queryParameters.get("selectedPlayer");
   const { id } = useParams();
 
 
@@ -44,7 +45,7 @@ const GamePage = () => {
         <Button size="lg" variant="info" onClick={copyLink}>Share Secret Link With Friend</Button>
       </div>}
 
-      <GameCard cardData={fetchData} setCardData={setFetchData} />
+      <GameCard cardData={fetchData} setCardData={setFetchData} selectedPlayer={selectedPlayer} gameId={id}/>
     </div>
   );
 };

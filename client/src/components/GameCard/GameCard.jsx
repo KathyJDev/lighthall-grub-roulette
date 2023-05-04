@@ -1,21 +1,75 @@
 import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { db } from '../../../firebase-config.js';
+import { collection, doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
 
 const GameCard = (props) => {
-  // console.log(props);
-  const { cardData, setCardData } = props;
+  const { cardData, setCardData, gameId, selectedPlayer } = props;
   const [acceptedCards, setAcceptedCards] = useState([]);
   const [rejectedCards, setRejectedCards] = useState([]);
-  const acceptFunction = (data) => {
+  const [finishedSelections, setFinishedSelections] = useState(false);
+
+  const acceptFunction = async (data) => {
     setAcceptedCards([...acceptedCards, cardData.find((e) => e.id === data)]);
     setCardData(cardData.filter((e) => e.id !== data));
-  };
-  const rejectFunction = (data) => {
-    setRejectedCards([...rejectedCards, cardData.find((e) => e.id === data)]);
-    setCardData(cardData.filter((e) => e.id !== data));
+    
+    const gameRef = doc(db, 'games', gameId);
+    const restaurantName = cardData.find((e) => e.id === data).name;
+  
+    const gameDoc = await getDoc(gameRef);
+    const restaurantArray = gameDoc.data().restaurants || [];
+  
+    const existingRestaurantIndex = restaurantArray.findIndex((restaurant) => restaurant.name === restaurantName);
+    if (existingRestaurantIndex >= 0) {
+      const updatedRestaurantArray = [...restaurantArray];
+      const existingRestaurant = updatedRestaurantArray[existingRestaurantIndex];
+      if (!existingRestaurant.acceptedBy.includes(selectedPlayer)) {
+        existingRestaurant.acceptedBy.push(selectedPlayer);
+        await updateDoc(gameRef, { restaurants: updatedRestaurantArray });
+      }
+    } else {
+      const newRestaurant = { name: restaurantName, acceptedBy: [selectedPlayer] };
+      const updatedRestaurantArray = [...restaurantArray, newRestaurant];
+      await updateDoc(gameRef, { restaurants: updatedRestaurantArray });
+    }
+
+    // Check if the player has finished their selections
+    if (cardData.length === 1 ) {
+      const gameRef = doc(db, 'games', gameId);
+      const gameDoc = await getDoc(gameRef);
+
+      const finishedPlayersArray = gameDoc.data().finishedPlayers || [];
+
+      await updateDoc(gameRef, {
+        finishedPlayers: [...finishedPlayersArray, { player: selectedPlayer, finished: true }]
+      });
+      setFinishedSelections(true);
+    }
+    
   };
 
+  const rejectFunction = async (data) => {
+    setRejectedCards([...rejectedCards, cardData.find((e) => e.id === data)]);
+    setCardData(cardData.filter((e) => e.id !== data));
+
+    // Check if the player has finished their selections
+    if (cardData.length === 1) {
+      const gameRef = doc(db, 'games', gameId);
+      const gameDoc = await getDoc(gameRef);
+
+      const finishedPlayersArray = gameDoc.data().finishedPlayers || [];
+
+      await updateDoc(gameRef, {
+        finishedPlayers: [...finishedPlayersArray, { player: selectedPlayer, finished: true }]
+      });
+      setFinishedSelections(true);
+    }
+  };
+
+  if (finishedSelections) {
+    window.location.href = `/game/${gameId}/final`;
+  }
 
 
   return (
