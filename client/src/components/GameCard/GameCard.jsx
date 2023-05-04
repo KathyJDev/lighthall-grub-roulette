@@ -1,8 +1,17 @@
 import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 const GameCard = (props) => {
+  const [uniqueId, setUniqueId] = useState("");
+  const { id } = useParams();
+  const queryParameters = new URLSearchParams(window.location.search);
+  const locationData = queryParameters.get("location");
+  const priceData = queryParameters.get("price");
+
   // console.log(props);
   const { cardData, setCardData } = props;
   const [acceptedCards, setAcceptedCards] = useState([]);
@@ -16,10 +25,25 @@ const GameCard = (props) => {
     setCardData(cardData.filter((e) => e.id !== data));
   };
 
+  function copyLink() {
+    setUniqueId("xyz"); //test
+    toast.info("Copied!");
+    navigator.clipboard.writeText(`${window.location.origin + "/modal/"}${uniqueId + "?location=" + locationData + "&price=" + priceData}`);
+  }
+
 
 
   return (
     <div>
+      {id && (cardData.length === 0) ?
+        <div className="game-header">
+          <Link to="/final"><Button size="lg" variant="success">Continue</Button></Link>
+        </div>
+        : (cardData.length === 0) ?
+          <div className="game-header">
+            <Button size="lg" variant="info" onClick={copyLink}>Share Secret Link With Friend</Button>
+          </div> : ""}
+
       {cardData.length > 0 ? <div className="card-container">
         <h1>Select Resttaurants</h1>
         {cardData.map((e) => {
@@ -42,7 +66,6 @@ const GameCard = (props) => {
         <div>
         </div>
       </div> : ""}
-
 
       <div className="card-container">
         {acceptedCards.length > 0 ? <h1>Selected Restaurants</h1> : ""}
