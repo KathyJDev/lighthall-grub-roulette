@@ -20,7 +20,8 @@ const GameCard = (props) => {
 
   return (
     <div>
-      <div className="card-container">
+      {cardData.length > 0 ? <div className="card-container">
+        <h1>Select Resttaurants</h1>
         {cardData.map((e) => {
           return (
             <Card key={e.id} style={{ width: '16rem' }}>
@@ -40,12 +41,14 @@ const GameCard = (props) => {
         })}
         <div>
         </div>
-      </div>
+      </div> : ""}
+
 
       <div className="card-container">
-        <h1>Selected Restaurants</h1>
+        {acceptedCards.length > 0 ? <h1>Selected Restaurants</h1> : ""}
+
         {acceptedCards.map((a, index) => (
-          <Card key={index} style={{ width: '14rem', height: "20rem" }}>
+          <Card key={index} style={{ width: '16rem' }}>
             <Card.Img variant="top" src={a.image_url} />
             <Card.Body>
               <Card.Title>{a.name}</Card.Title>
