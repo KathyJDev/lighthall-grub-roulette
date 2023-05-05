@@ -292,11 +292,11 @@ span{
   height: 100vh;
 }
 
-a:focus {
+.anchor:focus {
   outline: none;
 }
 
-a {
+.anchor {
   display: block;
   padding: 15px;
   border-radius: 5px;
