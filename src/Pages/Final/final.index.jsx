@@ -33,7 +33,7 @@ const FinalPage = () => {
 
   useEffect(() => {
     waitForPlayersToFinish();
-  }, [gameData]);
+  }, []);
   
 
   if (!allPlayersFinished) {
