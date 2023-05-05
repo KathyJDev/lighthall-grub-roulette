@@ -26,11 +26,14 @@ const FinalPage = (props) => {
 
   const waitForPlayersToFinish = async () => {
     let finishedPlayers = [];
-    while (finishedPlayers.length !== 2) {
+    const intervalId = setInterval(async () => {
       await checkAllPlayersFinished();
       finishedPlayers = gameData.finishedPlayers || [];
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-    }
+      if (finishedPlayers.length === 2) {
+        clearInterval(intervalId);
+        setAllPlayersFinished(true);
+      }
+    }, 5000);
   };
 
   useEffect(() => {
