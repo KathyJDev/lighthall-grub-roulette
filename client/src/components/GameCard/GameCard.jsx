@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import TinderCard from 'react-tinder-card';
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import { IconContext } from "react-icons";
+import FinalPage from "../../Pages/Final/final.index.jsx";
 
 
 
@@ -23,6 +24,11 @@ const GameCard = (props) => {
     
     const gameRef = doc(db, 'games', gameId);
     const restaurantName = cardData.find((e) => e.id === data).name;
+    const restaurantLocation = cardData.find((e) => e.id === data).location.display_address;
+    const restaurantPhone = cardData.find((e) => e.id === data).display_phone;
+    const restaurantImage = cardData.find((e) => e.id === data).image_url;
+    const restaurantRating = cardData.find((e) => e.id === data).rating;
+    const restaurantURL = cardData.find((e) => e.id === data).url;
   
     const gameDoc = await getDoc(gameRef);
     const restaurantArray = gameDoc.data().restaurants || [];
@@ -36,7 +42,7 @@ const GameCard = (props) => {
         await updateDoc(gameRef, { restaurants: updatedRestaurantArray });
       }
     } else {
-      const newRestaurant = { name: restaurantName, acceptedBy: [selectedPlayer] };
+      const newRestaurant = { name: restaurantName, location: restaurantLocation, phone: restaurantPhone, image: restaurantImage, rating: restaurantRating, url: restaurantURL, acceptedBy: [selectedPlayer] };
       const updatedRestaurantArray = [...restaurantArray, newRestaurant];
       await updateDoc(gameRef, { restaurants: updatedRestaurantArray });
     }
@@ -117,15 +123,16 @@ const GameCard = (props) => {
             > */}
               <div className='card'>
                 <h3>{e.name}</h3>
-                <h6>{e.location.display_address}</h6>
+                <h6>{e.location.display_address[0]}, {e.location.display_address[1]}</h6>
+                <h6>{e.location.display_address[2]}</h6>
                 <h6>Contact: {e.display_phone}</h6>
                 <img src={e.image_url} />
                 <p>Rating: {e.rating}</p>
 
               </div>
               <div className="buttons">
-                <img onClick={() => acceptFunction(e.id)} src="./check.png" className="pressable button-img" />
-                <img onClick={() => rejectFunction(e.id)} src="./cross.png" className="pressable button-img" />
+                <img onClick={() => acceptFunction(e.id)} src="../../public/check.png" className="pressable button-img" />
+                <img onClick={() => rejectFunction(e.id)} src="../../public/cross.png" className="pressable button-img" />
 
                 {/* <IconContext.Provider value={{ color: "#2ECC71", size: "5rem", className: "pressable" }}>
                   <AiFillCheckCircle onClick={() => acceptFunction(e.id)} />

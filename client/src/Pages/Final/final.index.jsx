@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase-config.js";
 import { doc, getDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const FinalPage = () => {
   const { id } = useParams();
@@ -35,12 +36,19 @@ const FinalPage = () => {
   }, [gameData]);
   
 
-  if (!gameData) {
-    return <p>Loading...</p>;
-  }
-
   if (!allPlayersFinished) {
-    return <p>Waiting for other players to finish selecting...</p>;
+    return (
+      <div className="waiting-for-players">
+      <p>Waiting for all players to finish selecting...</p>
+      <Player
+        src="https://lottie.host/b985eb8b-3144-403d-9bfe-648398293810/We2wBFziNC.json"
+        className="player"
+        loop
+        autoplay
+      />
+
+      </div>
+    );
   }
 
   const restaurantArray = gameData.restaurants || [];
@@ -66,10 +74,21 @@ const FinalPage = () => {
   }
 
   return (
-    <div>
-      <h1>Final Page</h1>
+    <div className="final-decision">
+      <h1>Final Restaurant Decision: </h1>
       {restaurantWithMostAcceptedBy ? (
-        <p>The restaurant with the most acceptedBy is: {restaurantWithMostAcceptedBy.name}</p>
+        <>
+        <div className='card'>
+        <h3>{restaurantWithMostAcceptedBy.name}</h3>
+        <h6>{restaurantWithMostAcceptedBy.location[0]}, {restaurantWithMostAcceptedBy.location[10]}</h6>
+        <h6>{restaurantWithMostAcceptedBy.location[2]}</h6>
+        <h6>Contact: {restaurantWithMostAcceptedBy.phone}</h6>
+        <img src={restaurantWithMostAcceptedBy.image} />
+        <p>Rating: {restaurantWithMostAcceptedBy.rating}</p>
+        </div>
+        <h5>Learn more about the restaurant here: </h5>
+        <input value={restaurantWithMostAcceptedBy.url} readOnly></input>
+        </>
       ) : (
         <p>No restaurants have been accepted yet.</p>
       )}

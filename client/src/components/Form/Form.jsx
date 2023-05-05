@@ -47,7 +47,7 @@ const FormComponent = (props) => {
         <Form.Label>Location: </Form.Label>
         <Form.Control
           type="text"
-          placeholder="Enter your location"
+          placeholder="Brooklyn, NY"
           name="location"
           autoComplete="off"
           value={location}

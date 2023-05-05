@@ -4,6 +4,7 @@ import fork from '../../assets/fork.png';
 import { Link, useParams } from 'react-router-dom';
 import { db } from "../../../firebase-config.js";
 import { doc, getDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const PlayerSelectPage = () => {
 
@@ -25,8 +26,14 @@ const PlayerSelectPage = () => {
         fetchGameData();
       }, [id]);
 
+    function copyLink() {
+        toast.info("Copied!");
+        navigator.clipboard.writeText(`${window.location.origin}/game/${id}`);
+    }
+
     return (
         <div className="player-select">
+        <button onClick={copyLink}>Copy Share Link</button>
         <h1>Choose Player</h1>
         <div className="icon-fork-and-spoon">
             <div className="icon-group">
