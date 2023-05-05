@@ -35,7 +35,7 @@ const GamePage = () => {
   return (
     <div className="game-container">
 
-      <GameCard cardData={fetchData} setCardData={setFetchData} selectedPlayer={selectedPlayer} gameId={id}/>
+      <GameCard cardData={fetchData} setCardData={setFetchData} selectedPlayer={selectedPlayer} gameId={id} />
     </div>
   );
 };

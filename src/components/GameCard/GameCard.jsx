@@ -1,4 +1,5 @@
 import React, { useState, useRef, useMemo } from "react";
+import { useLocation } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { db } from '../../../firebase-config.js';
@@ -82,8 +83,13 @@ const GameCard = (props) => {
     }
   };
 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const locationData = searchParams.get('location');
+  const priceData = searchParams.get('price');
+
   if (finishedSelections) {
-    window.location.href = `/game/${gameId}/final`;
+    window.location.href = `/game/${gameId}/final?location=${locationData}&price=${priceData}&selectedPlayer=${selectedPlayer}`;
   }
 
   // tinder card swipe functions

@@ -3,8 +3,10 @@ import { db } from "../../../firebase-config.js";
 import { doc, getDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { toast } from "react-toastify";
+import { useLocation } from 'react-router-dom';
 
-const FinalPage = () => {
+const FinalPage = (props) => {
   const { id } = useParams();
   const gameRef = doc(db, "games", id);
   const [gameData, setGameData] = useState(null);
@@ -34,6 +36,24 @@ const FinalPage = () => {
   useEffect(() => {
     waitForPlayersToFinish();
   }, []);
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const locationData = searchParams.get('location');
+  const priceData = searchParams.get('price');
+  const selectedPlayer = searchParams.get('selectedPlayer');
+
+  function copyLink() {
+    toast.info("Copied!");
+    console.log(selectedPlayer)
+    console.log(locationData)
+    console.log(priceData)
+    if (selectedPlayer === "player1"){
+      navigator.clipboard.writeText(`${window.location.origin}/game/${id}?location=${locationData}&price=${priceData}&selectedPlayer=player2`)
+    } else if (props.selectedPlayer === "player2"){
+      navigator.clipboard.writeText(`${window.location.origin}/game/${id}?location=${locationData}&price=${priceData}&selectedPlayer=player1`)
+    }
+  }
   
 
   if (!allPlayersFinished) {
@@ -46,7 +66,7 @@ const FinalPage = () => {
         loop
         autoplay
       />
-
+      <button onClick={copyLink}>Copy Share Link</button>
       </div>
     );
   }

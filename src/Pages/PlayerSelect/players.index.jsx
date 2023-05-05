@@ -26,14 +26,8 @@ const PlayerSelectPage = () => {
         fetchGameData();
       }, [id]);
 
-    function copyLink() {
-        toast.info("Copied!");
-        navigator.clipboard.writeText(`${window.location.origin}/game/${id}/playerselect`);
-    }
-
     return (
         <div className="player-select">
-        <button onClick={copyLink}>Copy Share Link</button>
         <h1>Choose Player</h1>
         <div className="icon-fork-and-spoon">
             <div className="icon-group">

@@ -150,7 +150,6 @@ span{
   margin-top: 2rem;
 }
 
-
 .card {
   display: flex;
   align-items: center;
@@ -199,21 +198,6 @@ span{
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
   font-size: 25px;
-}
-
-button {
-  cursor: pointer;
-  background-color: #fff;
-  color: #3D405B;
-  border: 0;
-  border-radius: 5px;
-  padding: 12px 20px;
-  font-size: 18px;
-  font-weight: 600;
-  width: 200px;
-  margin: 0 auto;
-  display: block;
-  margin-top: 20px;
 }
 
 
@@ -325,6 +309,20 @@ h5 {
   font-size: 1.5rem;
   font-weight: 700;
   margin-top: 2rem;
+}
+
+button {
+  cursor: pointer;
+  background-color: #fff;
+  color: #3D405B;
+  border: 0;
+  border-radius: 5px;
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  width: 200px;
+  margin: 0 auto;
+  display: block;
 }
 
 /* toast css */
