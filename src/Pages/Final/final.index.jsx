@@ -33,7 +33,7 @@ const FinalPage = (props) => {
         clearInterval(intervalId);
         setAllPlayersFinished(true);
       }
-    }, 5000);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const FinalPage = (props) => {
         <p>Rating: {restaurantWithMostAcceptedBy.rating}</p>
         </div>
         <h5>Learn more about the restaurant here: </h5>
-        <input value={restaurantWithMostAcceptedBy.url} readOnly></input>
+        <a href={restaurantWithMostAcceptedBy.url} target="_blank" rel="noopener noreferrer">{restaurantWithMostAcceptedBy.url}</a>
         </>
       ) : (
         <p>No restaurants have been accepted yet.</p>

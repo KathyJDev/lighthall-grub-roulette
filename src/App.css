@@ -292,17 +292,25 @@ span{
   height: 100vh;
 }
 
-input:focus{
+a:focus {
   outline: none;
 }
 
-input{
+a {
+  display: block;
   padding: 15px;
   border-radius: 5px;
   border: none;
   font-size: 16px;
   font-weight: 700;
   color: #3D405B;
+  text-decoration: none;
+  background-color: white;
+  margin-top: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 300px;
 }
 
 h5 {
