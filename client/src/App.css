@@ -121,6 +121,15 @@ span{
   width: 95%;
 }
 
+.button-img{
+  width: 5rem;
+  cursor: pointer;
+}
+
+.button-img:hover{
+ scale: 1.15;
+}
+
 .card h6{
   font-weight: 500;
   font-size: 0.8rem;

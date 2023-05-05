@@ -81,12 +81,15 @@ const GameCard = (props) => {
 
               </div>
               <div className="buttons">
-                <IconContext.Provider value={{ color: "#2ECC71", size: "5rem", className: "pressable" }}>
+                <img onClick={() => acceptFunction(e.id)} src="./check.png" className="pressable button-img" />
+                <img onClick={() => rejectFunction(e.id)} src="./cross.png" className="pressable button-img" />
+
+                {/* <IconContext.Provider value={{ color: "#2ECC71", size: "5rem", className: "pressable" }}>
                   <AiFillCheckCircle onClick={() => acceptFunction(e.id)} />
                 </IconContext.Provider>
                 <IconContext.Provider value={{ color: "#FF4A4A", size: "5rem", className: "pressable" }}>
                   <AiFillCloseCircle onClick={() => rejectFunction(e.id)} />
-                </IconContext.Provider>
+                </IconContext.Provider> */}
 
 
                 {/* <Button className="pressable" onClick={() => acceptFunction(e.id)} variant="success">Accept</Button>
