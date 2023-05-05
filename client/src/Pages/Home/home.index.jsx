@@ -4,6 +4,7 @@ import { useState } from "react";
 import { db } from "../../../firebase-config.js";
 import { collection, addDoc } from "firebase/firestore";
 import PlayerSelectPage from "../PlayerSelect/players.index";
+import home from '../../assets/home-page-img.png';
 
 const HomePage = () => {
   const [homeformData, setHomeFormData] = useState({
@@ -16,7 +17,7 @@ const HomePage = () => {
   async function createLink(event) {
     event.preventDefault();
     const gameCollection = collection(db, 'games');
-    const docRef = await addDoc(gameCollection, { location: homeformData.location, price: homeformData.price} );
+    const docRef = await addDoc(gameCollection, { location: homeformData.location, price: homeformData.price });
     setUniqueId(docRef.id);
     await navigateToPlayerSelectPage(docRef.id);
   }
@@ -29,10 +30,10 @@ const HomePage = () => {
     <div className="home">
       <div className="home-content">
         <span>Welcome to</span><h1> Grub Roulette</h1>
-        <FormComponent data={homeformData} setData={setHomeFormData} createLink={createLink}/>
-      {uniqueId && <PlayerSelectPage gameId={uniqueId} />}
+        <FormComponent data={homeformData} setData={setHomeFormData} createLink={createLink} />
+        {uniqueId && <PlayerSelectPage gameId={uniqueId} />}
       </div>
-      <img src="./home-page-img.png" />
+      <img src={home} />
 
 
     </div>

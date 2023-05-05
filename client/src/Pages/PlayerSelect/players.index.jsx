@@ -28,7 +28,7 @@ const PlayerSelectPage = () => {
 
     function copyLink() {
         toast.info("Copied!");
-        navigator.clipboard.writeText(`${window.location.origin}/game/${id}`);
+        navigator.clipboard.writeText(`${window.location.origin}/game/${id}/playerselect`);
     }
 
     return (

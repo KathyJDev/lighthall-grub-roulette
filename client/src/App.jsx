@@ -19,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/game" element={<Game />} />
-          <Route path="/game/:id" element={<Navigate to="playerselect" replace />} />
+          <Route path="/game/:id" element={<Game />} />
           <Route path="/game/:id/playerselect" element={<PlayerSelectPage />} />
           <Route path="/modal/:id" element={<GameModal />} />
           <Route path="/game/:id/final" element={<Final />} />

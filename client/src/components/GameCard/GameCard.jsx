@@ -9,6 +9,8 @@ import TinderCard from 'react-tinder-card';
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import FinalPage from "../../Pages/Final/final.index.jsx";
+import check from '../../assets/check.png';
+import cross from '../../assets/cross.png';
 
 
 
@@ -21,7 +23,7 @@ const GameCard = (props) => {
   const acceptFunction = async (data) => {
     setAcceptedCards([...acceptedCards, cardData.find((e) => e.id === data)]);
     setCardData(cardData.filter((e) => e.id !== data));
-    
+
     const gameRef = doc(db, 'games', gameId);
     const restaurantName = cardData.find((e) => e.id === data).name;
     const restaurantLocation = cardData.find((e) => e.id === data).location.display_address;
@@ -32,7 +34,7 @@ const GameCard = (props) => {
   
     const gameDoc = await getDoc(gameRef);
     const restaurantArray = gameDoc.data().restaurants || [];
-  
+
     const existingRestaurantIndex = restaurantArray.findIndex((restaurant) => restaurant.name === restaurantName);
     if (existingRestaurantIndex >= 0) {
       const updatedRestaurantArray = [...restaurantArray];
@@ -48,7 +50,7 @@ const GameCard = (props) => {
     }
 
     // Check if the player has finished their selections
-    if (cardData.length === 1 ) {
+    if (cardData.length === 1) {
       const gameRef = doc(db, 'games', gameId);
       const gameDoc = await getDoc(gameRef);
 
@@ -59,7 +61,7 @@ const GameCard = (props) => {
       });
       setFinishedSelections(true);
     }
-    
+
   };
 
   const rejectFunction = async (data) => {
@@ -131,8 +133,8 @@ const GameCard = (props) => {
 
               </div>
               <div className="buttons">
-                <img onClick={() => acceptFunction(e.id)} src="../../public/check.png" className="pressable button-img" />
-                <img onClick={() => rejectFunction(e.id)} src="../../public/cross.png" className="pressable button-img" />
+                <img onClick={() => acceptFunction(e.id)} src={check} className="pressable button-img" />
+                <img onClick={() => rejectFunction(e.id)} src={cross} className="pressable button-img" />
 
                 {/* <IconContext.Provider value={{ color: "#2ECC71", size: "5rem", className: "pressable" }}>
                   <AiFillCheckCircle onClick={() => acceptFunction(e.id)} />
