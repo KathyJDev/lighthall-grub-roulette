@@ -4,6 +4,8 @@ import Card from 'react-bootstrap/Card';
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import TinderCard from 'react-tinder-card';
+import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
+import { IconContext } from "react-icons";
 
 
 
@@ -73,13 +75,23 @@ const GameCard = (props) => {
               <div className='card'>
                 <h3>{e.name}</h3>
                 <h6>{e.location.address1}</h6>
+                <h6>Contact: {e.display_phone}</h6>
                 <img src={e.image_url} />
-                <p>{e.rating}</p>
+                <p>Rating: {e.rating}</p>
 
               </div>
               <div className="buttons">
-                <Button className="pressable" onClick={() => acceptFunction(e.id)} variant="success">Accept</Button>
-                <Button className="pressable" onClick={() => rejectFunction(e.id)} variant="danger">Reject</Button> </div>
+                <IconContext.Provider value={{ color: "#2ECC71", size: "5rem", className: "pressable" }}>
+                  <AiFillCheckCircle onClick={() => acceptFunction(e.id)} />
+                </IconContext.Provider>
+                <IconContext.Provider value={{ color: "#FF4A4A", size: "5rem", className: "pressable" }}>
+                  <AiFillCloseCircle onClick={() => rejectFunction(e.id)} />
+                </IconContext.Provider>
+
+
+                {/* <Button className="pressable" onClick={() => acceptFunction(e.id)} variant="success">Accept</Button>
+                <Button className="pressable" onClick={() => rejectFunction(e.id)} variant="danger">Reject</Button>  */}
+              </div>
 
               {/* </TinderCard> */}
             </div>
