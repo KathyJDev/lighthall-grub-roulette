@@ -9,9 +9,8 @@ app.get("/", async (req, res) => {
   try {
     const location = req.query.location;
     const price = req.query.price;
-    const cuisine = req.query.categories;
-    console.log(location, price, cuisine);
-    if (!location || !price || !cuisine) {
+    console.log(location, price);
+    if (!location || !price) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required" });
@@ -20,7 +19,7 @@ app.get("/", async (req, res) => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `https://api.yelp.com/v3/businesses/search?location=${location}&limit=11&categories=${cuisine}&price=${price}`,
+      url: `https://api.yelp.com/v3/businesses/search?location=${location}&limit=11&price=${price}`,
       headers: {
         Authorization: `Bearer ${apikey}`,
       },

@@ -8,7 +8,6 @@ import { doc, getDoc } from "firebase/firestore";
 const PlayerSelectPage = () => {
 
     const [location, setLocation] = useState("");
-    const [cuisine, setCuisine] = useState("");
     const [price, setPrice] = useState("");
     const { id } = useParams();
 
@@ -17,10 +16,9 @@ const PlayerSelectPage = () => {
           const gameDocRef = doc(db, "games", id);
           const gameDoc = await getDoc(gameDocRef);
           if (gameDoc.exists()) {
-            const { location: gameLocation, price: gamePrice, cuisine: gameCuisine } = gameDoc.data();
+            const { location: gameLocation, price: gamePrice} = gameDoc.data();
             setLocation(gameLocation);
             setPrice(gamePrice);
-            setCuisine(gameCuisine)
           }
         }
 
@@ -34,7 +32,7 @@ const PlayerSelectPage = () => {
             <div className="icon-group">
             <div className="icon">
                 <div className="icon-back">
-                <Link to={`/game/${id}?location=${location}&price=${price}&cuisine=${cuisine}&selectedPlayer=player1`}>
+                <Link to={`/game/${id}?location=${location}&price=${price}&selectedPlayer=player1`}>
                 <img
                     src={spoon}
                     alt="Not Found"
@@ -46,7 +44,7 @@ const PlayerSelectPage = () => {
             </div>
             <div className="icon">
                 <div className="icon-back">
-                <Link to={`/game/${id}?location=${location}&price=${price}&cuisine=${cuisine}&selectedPlayer=player2`}>
+                <Link to={`/game/${id}?location=${location}&price=${price}&selectedPlayer=player2`}>
                 <img
                     src={fork}
                     alt="Not Found"

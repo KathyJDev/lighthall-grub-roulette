@@ -3,17 +3,17 @@ import Home from "./Pages/Home/home.index";
 import Game from "./Pages/Game/game.index";
 import GameModal from "./Pages/GameModal/modal.index";
 import Final from "./Pages/Final/final.index";
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PlayerSelectPage from "./Pages/PlayerSelect/players.index";
+import "./App.css";
 
 
 
 function App() {
   return (
-    <>
+    <div className="app">
       <ToastContainer />
       <Router>
         <Routes>
@@ -26,7 +26,7 @@ function App() {
           {/* <Route path="/final" element={<Final />} /> */}
         </Routes>
       </Router>
-    </>
+    </div>
   );
 }
 

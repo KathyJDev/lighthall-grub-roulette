@@ -1,3 +1,3 @@
-export const setYelpUrl = (locationData, priceData, cuisineData) => {
-  return `http://localhost:4000?location=${locationData}&categories=${cuisineData}&price=${priceData}&limit=10`;
+export const setYelpUrl = (locationData, priceData) => {
+  return `http://localhost:4000?location=${locationData}&price=${priceData}&limit=10`;
 };

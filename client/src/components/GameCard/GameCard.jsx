@@ -1,8 +1,15 @@
-import { useState } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { db } from '../../../firebase-config.js';
 import { collection, doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
+import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import TinderCard from 'react-tinder-card';
+import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
+import { IconContext } from "react-icons";
+
+
 
 const GameCard = (props) => {
   const { cardData, setCardData, gameId, selectedPlayer } = props;
@@ -71,44 +78,73 @@ const GameCard = (props) => {
     window.location.href = `/game/${gameId}/final`;
   }
 
+  // tinder card swipe functions
+  const characters = cardData
+  const [lastDirection, setLastDirection] = useState()
+
+  const swiped = (direction, nameToDelete) => {
+    console.log('removing: ' + nameToDelete)
+    setLastDirection(direction)
+  }
+
+  const outOfFrame = (name) => {
+    console.log(name + ' left the screen!')
+  }
+  // 
+
+
 
   return (
-    <div>
+    <div className="game-card">
+      {/* {id && (cardData.length === 0) ?
+        <div className="game-header">
+          <Link to="/final"><Button size="lg" variant="success">Continue</Button></Link>
+        </div>
+        : (cardData.length === 0) ?
+          <div className="game-header">
+            <Button size="lg" variant="info" onClick={copyLink}>Share Secret Link With Friend</Button>
+          </div> : ""} */}
+
       <div className="card-container">
-        {cardData.map((e) => {
+        {characters.map((e) => {
           return (
-            <Card key={e.id} style={{ width: '16rem' }}>
-              <Card.Img variant="top" src={e.image_url} />
-              <Card.Body>
-                <Card.Title>{e.name}</Card.Title>
-                <Card.Text>{e.location.display_address[0]}</Card.Text>
-                <Card.Text>Rating: {e.rating}</Card.Text>
+            <div className="swipe">
+              {/* <TinderCard
+              className='swipe'
+              key={e.name}
+              onSwipe={(dir) => swiped(dir, e.name)}
+              onCardLeftScreen={() => outOfFrame(e.name)}
+            > */}
+              <div className='card'>
+                <h3>{e.name}</h3>
+                <h6>{e.location.display_address}</h6>
+                <h6>Contact: {e.display_phone}</h6>
+                <img src={e.image_url} />
+                <p>Rating: {e.rating}</p>
+
+              </div>
+              <div className="buttons">
+                <img onClick={() => acceptFunction(e.id)} src="./check.png" className="pressable button-img" />
+                <img onClick={() => rejectFunction(e.id)} src="./cross.png" className="pressable button-img" />
+
+                {/* <IconContext.Provider value={{ color: "#2ECC71", size: "5rem", className: "pressable" }}>
+                  <AiFillCheckCircle onClick={() => acceptFunction(e.id)} />
+                </IconContext.Provider>
+                <IconContext.Provider value={{ color: "#FF4A4A", size: "5rem", className: "pressable" }}>
+                  <AiFillCloseCircle onClick={() => rejectFunction(e.id)} />
+                </IconContext.Provider> */}
 
 
-                <Button onClick={() => acceptFunction(e.id)} variant="success">Accept</Button>
-                {' '}
-                <Button onClick={() => rejectFunction(e.id)} variant="danger">Reject</Button>
-              </Card.Body>
-            </Card>
+                {/* <Button className="pressable" onClick={() => acceptFunction(e.id)} variant="success">Accept</Button>
+                <Button className="pressable" onClick={() => rejectFunction(e.id)} variant="danger">Reject</Button>  */}
+              </div>
+
+              {/* </TinderCard> */}
+            </div>
           );
         })}
         <div>
         </div>
-      </div>
-
-      <div className="card-container">
-        <h1>Selected Restaurants</h1>
-        {acceptedCards.map((a, index) => (
-          <Card key={index} style={{ width: '14rem', height: "20rem" }}>
-            <Card.Img variant="top" src={a.image_url} />
-            <Card.Body>
-              <Card.Title>{a.name}</Card.Title>
-              <Card.Text>{a.location.display_address[0]}</Card.Text>
-              <Card.Text>Rating: {a.rating}</Card.Text>
-
-            </Card.Body>
-          </Card>
-        ))}
       </div>
 
     </div>

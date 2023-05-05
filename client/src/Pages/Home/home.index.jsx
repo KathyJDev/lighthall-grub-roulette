@@ -9,7 +9,6 @@ const HomePage = () => {
   const [homeformData, setHomeFormData] = useState({
     location: "",
     price: 0,
-    cuisine: "",
   });
 
   const [uniqueId, setUniqueId] = useState("");
@@ -17,7 +16,7 @@ const HomePage = () => {
   async function createLink(event) {
     event.preventDefault();
     const gameCollection = collection(db, 'games');
-    const docRef = await addDoc(gameCollection, { location: homeformData.location, price: homeformData.price, cuisine: homeformData.cuisine } );
+    const docRef = await addDoc(gameCollection, { location: homeformData.location, price: homeformData.price} );
     setUniqueId(docRef.id);
     await navigateToPlayerSelectPage(docRef.id);
   }
@@ -28,11 +27,14 @@ const HomePage = () => {
 
   return (
     <div className="home">
-      <h1>Welcome to Grub Roulette</h1>
-      <h5>Please type in your location and press start</h5>
-      <FormComponent data={homeformData} setData={setHomeFormData} onSubmit={createLink} />
-      <button onClick={createLink}>Start Here</button>
+      <div className="home-content">
+        <span>Welcome to</span><h1> Grub Roulette</h1>
+        <FormComponent data={homeformData} setData={setHomeFormData} createLink={createLink}/>
       {uniqueId && <PlayerSelectPage gameId={uniqueId} />}
+      </div>
+      <img src="./home-page-img.png" />
+
+
     </div>
   );
 };
