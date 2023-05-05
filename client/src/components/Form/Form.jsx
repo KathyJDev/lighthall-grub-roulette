@@ -46,6 +46,7 @@ const FormComponent = (props) => {
       <Form.Group className="mb-3 form-grp" controlId="formlocation">
         <Form.Label>Location: </Form.Label>
         <Form.Control
+          required
           type="text"
           placeholder="Brooklyn, NY"
           name="location"
@@ -63,7 +64,7 @@ const FormComponent = (props) => {
       <Form.Group className="mb-3 form-grp" controlId="formprice">
         <Form.Label>Price: </Form.Label>
         <Select
-
+          required
           className="select"
           options={priceOptions}
           // defaultValue={priceOptions[0]}
