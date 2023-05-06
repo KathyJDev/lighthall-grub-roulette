@@ -103,7 +103,7 @@ const FinalPage = (props) => {
         <>
         <div className='card'>
         <h3>{restaurantWithMostAcceptedBy.name}</h3>
-        <h6>{restaurantWithMostAcceptedBy.location[0]}, {restaurantWithMostAcceptedBy.location[10]}</h6>
+        <h6>{restaurantWithMostAcceptedBy.location[0]}, {restaurantWithMostAcceptedBy.location[1]}</h6>
         <h6>{restaurantWithMostAcceptedBy.location[2]}</h6>
         <h6>Contact: {restaurantWithMostAcceptedBy.phone}</h6>
         <img src={restaurantWithMostAcceptedBy.image} />
